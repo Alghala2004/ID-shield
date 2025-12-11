@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>التحقق من الرقم المؤقت</title>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700&display=swap" rel="stylesheet">
+
+<style>
+body {
+  font-family: "Tajawal", sans-serif;
+  background: #f6f7f9;
+  margin: 0;
+  padding: 0;
+}
+
+/* ==============================
+      FIXED HEADER LIKE ABSHER
+   ============================== */
+.header {
+  height: 65px;
+  background: white;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: fixed;
+  top: 0;
+  right: 0;
+  left: 0;
+  z-index: 1000;
+  font-size: 20px;
+  font-weight: 700;
+}
+
+.header .back {
+  position: absolute;
+  right: 18px;
+  font-size: 22px;
+  cursor: pointer;
+  color: #00724f;
+  height: 100%;
+  display: flex;
+  align-items: center;
+}
+
+/* MAIN PAGE PADDING */
+.page-container {
+  padding: 90px 18px 40px; /* نزل المحتوى تحت الهيدر */
+}
+
+/* General Box */
+.box {
+  background: white;
+  padding: 22px;
+  border-radius: 15px;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+  margin-bottom: 15px;
+}
+
+/* Placeholder Card */
+.placeholder-card {
+  background: #f2f2f2 !important;
+  padding: 25px;
+  border-radius: 15px;
+  border-left: 4px dashed #bcbcbc;
+  text-align: center;
+  margin-top: 20px;
+}
+
+/* Result Cards */
+.state-card {
+  background: white;
+  border-radius: 15px;
+  padding: 25px;
+  margin-top: 15px;
+  text-align: center;
+  border-left-width: 6px;
+  border-left-style: solid;
+}
+
+.ok { color: #00946f; }
+.expired { color: #ff4d4d; }
+.invalid { color: #e6a000; }
+
+.ok-border { border-left-color: #00946f; }
+.expired-border { border-left-color: #ff4d4d; }
+.invalid-border { border-left-color: #e6a000; }
+
+/* Input focus fix */
+.form-control:focus {
+  box-shadow: none !important;
+  outline: none !important;
+  border-color: #00946f;
+}
+
+#resultCards { display: none; }
+</style>
+</head>
+
+<body>
+
+<!-- ================= HEADER ================= -->
+<div class="header">
+  <span class="back" onclick="history.back()">
+    <i class="fa-solid fa-arrow-right"></i>
+  </span>
+  التحقق من الرقم المؤقت
+</div>
+
+<!-- ================= PAGE CONTENT ================= -->
+<div class="page-container">
+
+  <!-- Input Form -->
+  <div class="box">
+    <h5 class="fw-bold text-center mb-3">الاستعلام عن صلاحية الرقم المؤقت</h5>
+
+    <p class="text-muted">ادخل الرقم المؤقت للتحقق من صلاحيته</p>
+
+    <label class="fw-bold mt-2">الرقم المؤقت</label>
+    <input id="checkInput" type="text" class="form-control mt-1" placeholder="ادخل الرقم المؤقت هنا">
+
+    <button class="btn btn-success w-100 mt-3" onclick="checkTemp()">تحقق</button>
+  </div>
+
+  <!-- Placeholder Card -->
+  <div id="placeholderCard" class="placeholder-card">
+    <h6 class="fw-bold mb-1">حالة الرقم المؤقت</h6>
+    <p class="text-muted">سيتم عرض نتيجة التحقق بعد إدخال الرقم والضغط على تحقق.</p>
+  </div>
+
+  <!-- Result Cards -->
+  <div id="resultCards"></div>
+
+</div>
+
+<script>
+let saved = localStorage.getItem("tempIDData");
+let data = saved ? JSON.parse(saved) : null;
+
+function checkTemp() {
+  let input = document.getElementById("checkInput").value.replace(/\s/g, "");
+  let output = "";
+
+  document.getElementById("placeholderCard").style.display = "none";
+  document.getElementById("resultCards").style.display = "block";
+
+  if (!data) {
+    output = invalidCard();
+  } else {
+    let storedID = data.id.replace(/\s/g, "");
+    let now = new Date().getTime();
+    let end = new Date(data.end).getTime();
+
+    if (input !== storedID) {
+      output = invalidCard();
+    } else if (now > end) {
+      output = expiredCard();
+    } else {
+      output = okCard();
+    }
+  }
+
+  document.getElementById("resultCards").innerHTML = output;
+}
+
+function okCard() {
+  return `
+    <div class="state-card ok-border">
+      <i class="fa-solid fa-circle-check fa-2x ok"></i>
+      <h4 class="ok mt-3">ساري</h4>
+      <p class="text-muted">الرقم المؤقت صالح للاستخدام</p>
+    </div>`;
+}
+
+function expiredCard() {
+  return `
+    <div class="state-card expired-border">
+      <i class="fa-solid fa-circle-xmark fa-2x expired"></i>
+      <h4 class="expired mt-3">منتهية صلاحيته</h4>
+      <p class="text-muted">انتهت صلاحية هذا الرقم المؤقت</p>
+    </div>`;
+}
+
+function invalidCard() {
+  return `
+    <div class="state-card invalid-border">
+      <i class="fa-solid fa-circle-exclamation fa-2x invalid"></i>
+      <h4 class="invalid mt-3">رقم غير صحيح</h4>
+      <p class="text-muted">تأكد من إدخال الرقم المؤقت بشكل صحيح</p>
+    </div>`;
+}
+</script>
+
+</body>
+</html>

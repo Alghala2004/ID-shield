@@ -1,0 +1,942 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>تسجيل الدخول - أبشر</title>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+    />
+    <!-- Font Awesome 6 -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <!-- Bootstrap Icons -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800&display=swap"
+      rel="stylesheet"
+    />
+
+    <style>
+      :root {
+        --primary-color: #00663d;
+        --primary-dark: #007050;
+        --light-bg: #f5f7f8;
+        --text-dark: #0a3a2a;
+        --border-color: #d8d8d8;
+        --placeholder-color: #969798;
+        --icon-color: #6c757d;
+      }
+
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      html,
+      body {
+        height: 100%;
+      }
+      html,
+      body {
+        overflow-x: hidden;
+      }
+      body {
+        font-family: "Tajawal", sans-serif;
+        background-color: var(--light-bg);
+        direction: rtl;
+        display: flex;
+        flex-direction: column;
+        min-height: 100vh;
+      }
+
+      /* Header Styles - ثابت في الأعلى */
+      .absher-header {
+        background: white;
+        height: 75px;
+        width: 100%;
+        position: fixed;
+        box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 1000;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0 2rem;
+      }
+
+      .icon-btn {
+        border: none;
+        background: none;
+        font-size: 26px;
+        color: #00724f;
+        cursor: pointer;
+        padding: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        transition: all 0.3s;
+      }
+
+      .icon-btn:hover {
+        background-color: rgba(0, 114, 79, 0.1);
+        transform: scale(1.05);
+      }
+
+      .absher-logo {
+        height: 55px;
+        object-fit: contain;
+      }
+
+      /* Main Content - يأخذ المساحة المتبقية */
+      .main-content {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        padding-top: 75px; /* مسافة من الهيدر */
+        padding-bottom: 20px;
+      }
+
+      .login-container {
+        width: 100%;
+        max-width: 450px;
+        margin: 0 auto;
+        padding: 20px;
+      }
+
+      .login-card {
+        background: white;
+        padding: 2.2rem;
+        border-radius: 22px;
+        width: 100%;
+        box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+        transition: all 0.3s ease;
+      }
+
+      .form-title {
+        font-size: 24px;
+        font-weight: bold;
+        text-align: right;
+        color: var(--text-dark);
+        margin-bottom: 1.8rem;
+      }
+
+      .ab-input-group {
+        display: flex;
+        align-items: center;
+        border: 1px solid var(--border-color);
+        border-radius: 12px;
+        padding: 0.85rem 1.2rem;
+        background: white;
+        transition: all 0.3s;
+        margin-bottom: 5px;
+      }
+
+      .ab-input-group:focus-within {
+        border-color: var(--primary-color);
+        box-shadow: 0 0 0 3px rgba(0, 128, 103, 0.15);
+      }
+
+      .input-icon {
+        color: var(--icon-color);
+        font-size: 18px;
+        width: 24px;
+        text-align: center;
+        margin-left: 10px;
+        flex-shrink: 0;
+      }
+
+      .input-field {
+        flex: 1;
+        border: none;
+        outline: none;
+        font-size: 16px;
+        background: transparent;
+        color: #333;
+        min-width: 0;
+        padding: 0 5px;
+        font-family: "Tajawal", sans-serif;
+      }
+
+      .input-field::placeholder {
+        color: var(--placeholder-color);
+        font-size: 15px;
+      }
+
+      .togglePassword {
+        border: none;
+        background: none;
+        cursor: pointer;
+        padding: 5px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-right: 5px;
+        color: var(--icon-color);
+        font-size: 18px;
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+        transition: all 0.3s;
+      }
+
+      .togglePassword:hover {
+        color: var(--primary-color);
+        background-color: rgba(0, 128, 103, 0.1);
+      }
+
+      .forgot-password-link {
+        color: var(--primary-color);
+        font-size: 14px;
+        text-decoration: none;
+        display: inline-block;
+        margin-top: 8px;
+        transition: color 0.3s;
+      }
+
+      .forgot-password-link:hover {
+        color: var(--primary-dark);
+        text-decoration: underline;
+      }
+
+      .ab-btn {
+        margin-top: 1.8rem;
+        padding: 1rem;
+        border-radius: 12px;
+        border: none;
+        font-size: 17px;
+        font-weight: bold;
+        cursor: pointer;
+        transition: all 0.3s;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        font-family: "Tajawal", sans-serif;
+      }
+
+      .ab-btn--solid.primary {
+        background: var(--primary-color);
+        color: white;
+      }
+
+      .ab-btn--solid.primary:hover {
+        background: var(--primary-dark);
+        transform: translateY(-3px);
+        box-shadow: 0 6px 18px rgba(0, 128, 103, 0.25);
+      }
+
+      .ab-btn--solid.primary:active {
+        transform: translateY(-1px);
+      }
+
+      .login-footer {
+        text-align: center;
+        margin-top: 1.8rem;
+        padding-top: 1.5rem;
+        border-top: 1px solid #eee;
+      }
+
+      .login-footer a {
+        color: var(--primary-dark);
+        font-size: 16px;
+        text-decoration: none;
+        font-weight: 500;
+        transition: color 0.3s;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+      }
+
+      .login-footer a:hover {
+        color: var(--primary-color);
+        text-decoration: underline;
+      }
+
+      .form-label {
+        color: #333;
+        font-size: 15px;
+        margin-bottom: 10px;
+        display: block;
+        font-weight: 600;
+      }
+
+      /* رسائل التحقق */
+      .validation-message {
+        font-size: 13px;
+        margin-top: 5px;
+        display: none;
+      }
+
+      .validation-message.error {
+        color: #dc3545;
+        display: block;
+      }
+
+      .validation-message.success {
+        color: #198754;
+        display: block;
+      }
+
+      /* تحسينات للأجهزة المحمولة */
+      @media (max-width: 768px) {
+        .absher-header {
+          padding: 0 1rem;
+          height: 65px;
+        }
+
+        .absher-logo {
+          height: 45px;
+        }
+
+        .icon-btn {
+          font-size: 22px;
+          width: 36px;
+          height: 36px;
+        }
+
+        .main-content {
+          padding-top: 65px;
+        }
+
+        .login-card {
+          padding: 1.8rem;
+          border-radius: 18px;
+        }
+
+        .form-title {
+          font-size: 22px;
+          margin-bottom: 1.5rem;
+        }
+
+        .ab-input-group {
+          padding: 0.75rem 1rem;
+        }
+
+        .input-field {
+          font-size: 15px;
+        }
+
+        .ab-btn {
+          padding: 0.9rem;
+          font-size: 16px;
+          margin-top: 1.5rem;
+        }
+
+        .login-footer {
+          margin-top: 1.5rem;
+          padding-top: 1.2rem;
+        }
+      }
+
+      /* تحسينات للأجهزة الصغيرة جداً */
+      @media (max-width: 480px) {
+        .login-card {
+          padding: 1.5rem;
+        }
+
+        .form-title {
+          font-size: 20px;
+        }
+
+        .ab-input-group {
+          padding: 0.7rem 0.9rem;
+        }
+
+        .input-icon {
+          font-size: 16px;
+          margin-left: 8px;
+        }
+
+        .ab-btn {
+          padding: 0.85rem;
+        }
+
+        .absher-header {
+          padding: 0 0.75rem;
+        }
+
+        .left-icons {
+          gap: 0.5rem;
+        }
+      }
+
+      /* تحسين التباعد بين العناصر */
+      .form-group {
+        margin-bottom: 0.5rem;
+      }
+
+      /* تأثيرات إضافية */
+      .ab-input-group.error {
+        border-color: #dc3545;
+      }
+
+      .ab-input-group.success {
+        border-color: #198754;
+      }
+
+      /* تأثير تحميل */
+      .loading {
+        position: relative;
+        color: transparent !important;
+      }
+
+      .loading::after {
+        content: "";
+        position: absolute;
+        width: 20px;
+        height: 20px;
+        border: 2px solid rgba(255, 255, 255, 0.3);
+        border-radius: 50%;
+        border-top-color: white;
+        animation: spin 0.8s linear infinite;
+      }
+
+      @keyframes spin {
+        to {
+          transform: rotate(360deg);
+        }
+      }
+
+      /* إصلاح مشكلة الظلال */
+      .input-field:focus,
+      .ab-input-group input:focus {
+        box-shadow: none !important;
+        outline: none !important;
+      }
+
+      .ab-input-group:focus-within {
+        box-shadow: none !important;
+        border-color: var(--primary-color) !important;
+      }
+
+      /* تنسيق للأيقونات داخل الأزرار */
+      .btn-icon {
+        font-size: 18px;
+      }
+
+      /* تنسيقات للشريط الجانبي */
+      .left-icons {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+      }
+      .absher-footer {
+        background: #fff;
+        direction: rtl;
+        text-align: right;
+        padding: 2rem 0.4rem;
+        margin-top: 3rem;
+      }
+
+      .footer-logo {
+        height: 70px;
+      }
+
+      .footer-desc {
+        color: #444;
+        font-size: 15px;
+        line-height: 1.7;
+      }
+
+      .footer-links {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+      }
+
+      .footer-links li {
+        margin-bottom: 8px;
+        color: #222;
+        cursor: pointer;
+      }
+
+      .footer-links li:hover {
+        color: #008067;
+      }
+
+      .store-icon {
+        height: 38px;
+      }
+
+      .tool-icon {
+        width: 45px;
+        height: 45px;
+        background: #e6f3ef;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 20px;
+        color: #008067;
+      }
+
+      .sign-lang-btn {
+        padding: 10px 20px;
+        border-radius: 25px;
+        border: 2px solid #008067;
+        background: none;
+        color: #008067;
+        font-weight: bold;
+      }
+
+      .contact-number {
+        font-size: 20px;
+        color: #008067;
+        font-weight: bold;
+      }
+
+      .soc {
+        width: 45px;
+        height: 45px;
+        background: #e6f3ef;
+        color: #008067;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
+        font-size: 22px;
+      }
+
+      .dga-badge {
+        height: 90px;
+      }
+
+      .footer-bottom {
+        background: #eef3f2;
+        padding: 1rem 0;
+        margin-top: 3rem;
+        font-size: 14px;
+      }
+
+      .footer-bottom a {
+        color: #008067;
+        text-decoration: none;
+      }
+
+      .footer-bottom a:hover {
+        text-decoration: underline;
+      }
+    </style>
+  </head>
+
+  <body dir="rtl">
+    <!-- الهيدر الثابت في الأعلى -->
+    <nav class="absher-header">
+      <!-- Logo -->
+      <img
+        src="https://absher.sa/portal/individuals/assets/images/absher_logo.svg"
+        class="absher-logo"
+        alt="Absher Logo"
+      />
+      <!-- Left icons -->
+      <div class="left-icons">
+        <!-- Menu icon -->
+        <button class="icon-btn">
+          <i class="bi bi-list"></i>
+        </button>
+
+        <!-- Language icon -->
+        <button class="icon-btn">
+          <i class="bi bi-globe2"></i>
+        </button>
+
+        <!-- Search icon -->
+        <button class="icon-btn">
+          <i class="bi bi-search"></i>
+        </button>
+      </div>
+    </nav>
+
+    <!-- المحتوى الرئيسي -->
+    <main class="main-content">
+      <div class="login-container">
+        <div class="login-card">
+          <!-- العنوان -->
+          <h6 class="form-title">تسجيل الدخول</h6>
+
+          <div class="d-flex flex-column gap-4 mt-4">
+            <!-- اسم المستخدم -->
+            <div class="form-group">
+              <label class="form-label"> اسم المستخدم أو رقم الهوية </label>
+
+              <div class="ab-input-group" id="usernameGroup">
+                <!-- أيقونة المستخدم -->
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="24"
+                  height="25"
+                  viewBox="0 0 24 25"
+                  fill="none"
+                >
+                  <path
+                    d="M12 22.5C6.477 22.5 2 18.023 2 12.5C2 6.977 6.477 2.5 12 2.5C17.523 2.5 22 6.977 22 12.5C22 18.023 17.523 22.5 12 22.5ZM7.013 18.756C8.42855 19.8877 10.1877 20.5029 12 20.5C13.97 20.5 15.773 19.788 17.167 18.608C16.5157 17.9397 15.7371 17.4089 14.877 17.0468C14.017 16.6847 13.0931 16.4988 12.16 16.5C11.1926 16.4989 10.2355 16.6989 9.34947 17.0872C8.46343 17.4756 7.66778 18.0439 7.013 18.756ZM5.616 17.32C6.45645 16.4281 7.47067 15.7177 8.59614 15.2327C9.72161 14.7477 10.9345 14.4984 12.16 14.5C13.3417 14.4985 14.512 14.7304 15.6037 15.1824C16.6955 15.6344 17.6873 16.2976 18.522 17.134C19.3781 15.9291 19.8836 14.5106 19.9826 13.0359C20.0815 11.5612 19.77 10.0879 19.0825 8.77946C18.395 7.47102 17.3585 6.37862 16.088 5.62345C14.8174 4.86827 13.3625 4.47984 11.8846 4.50125C10.4067 4.52267 8.96366 4.95308 7.71552 5.74476C6.46738 6.53643 5.46296 7.6584 4.81369 8.9862C4.16442 10.314 3.89569 11.7957 4.03732 13.2669C4.17894 14.7382 4.72537 16.1414 5.616 17.321V17.32ZM12 13.5C10.9391 13.5 9.92172 13.0786 9.17157 12.3284C8.42143 11.5783 8 10.5609 8 9.5C8 8.43913 8.42143 7.42172 9.17157 6.67157C9.92172 5.92143 10.9391 5.5 12 5.5C13.0609 5.5 14.0783 5.92143 14.8284 6.67157C15.5786 7.42172 16 8.43913 16 9.5C16 10.5609 15.5786 11.5783 14.8284 12.3284C14.0783 13.0786 13.0609 13.5 12 13.5ZM12 11.5C12.5304 11.5 13.0391 11.2893 13.4142 10.9142C13.7893 10.5391 14 10.0304 14 9.5C14 8.96957 13.7893 8.46086 13.4142 8.08579C13.0391 7.71071 12.5304 7.5 12 7.5C11.4696 7.5 10.9609 7.71071 10.5858 8.08579C10.2107 8.46086 10 8.96957 10 9.5C10 10.0304 10.2107 10.5391 10.5858 10.9142C10.9609 11.2893 11.4696 11.5 12 11.5Z"
+                    fill="#969798"
+                  ></path>
+                </svg>
+                <input
+                  type="text"
+                  class="input-field"
+                  placeholder="اسم المستخدم أو رقم الهوية"
+                  id="username"
+                />
+              </div>
+              <div class="validation-message" id="usernameMessage"></div>
+            </div>
+
+            <!-- كلمة المرور -->
+            <div class="form-group">
+              <label class="form-label"> كلمة المرور </label>
+
+              <div class="ab-input-group" id="passwordGroup">
+                <!-- أيقونة القفل -->
+                <i class="fas fa-lock input-icon"></i>
+
+                <input
+                  type="password"
+                  class="input-field"
+                  placeholder="كلمة المرور"
+                  id="password"
+                />
+
+                <!-- أيقونة العين (إظهار/إخفاء) -->
+                <button
+                  type="button"
+                  class="togglePassword"
+                  id="togglePasswordBtn"
+                >
+                  <i class="fas fa-eye" id="eyeIcon"></i>
+                </button>
+              </div>
+              <div class="validation-message" id="passwordMessage"></div>
+
+              <a href="#" class="forgot-password-link fw-semibold">
+                نسيت كلمة المرور؟
+              </a>
+            </div>
+          </div>
+
+          <!-- زر الدخول -->
+          <button class="ab-btn ab-btn--solid primary w-100" id="loginBtn">
+            تسجيل الدخول
+          </button>
+
+          <div class="login-footer">
+            <a href="#"> مستخدم جديد؟ </a>
+          </div>
+        </div>
+      </div>
+    </main>
+    <footer class="absher-footer pt-5 pb-4">
+      <div class="container">
+        <div class="row text-right text-md-start g-5">
+          <!-- Column: About -->
+          <div class="col-md-3 col-12 text-center text-md-end">
+            <img
+              src="https://absher.sa/portal/individuals/assets/images/absher_logo.svg"
+              class="footer-logo mb-3"
+              alt="Absher Logo"
+            />
+            <p class="footer-desc">
+              منصة تقدم خدمات من وزارة الداخلية السعودية<br />
+              للمواطنين والمقيمين والزوار
+            </p>
+
+            <h6 class="fw-bold mt-3">حمل تطبيق أبشر</h6>
+
+            <div
+              class="grid grid-cols-1 grid-cols-3 gap-3 mt-3 justify-content-center justify-content-md-start"
+            >
+              <img
+                src="https://absher.sa/portal/individuals/assets/images/donwloads/app-gallary.svg"
+                class="store-icon"
+              />
+              <img
+                src="https://absher.sa/portal/individuals/assets/images/store-logos/google-play.svg"
+                class="store-icon"
+              />
+              <img
+                src="https://absher.sa/portal/individuals/assets/images/store-logos/app-store.svg"
+                class="store-icon"
+              />
+            </div>
+          </div>
+
+          <!-- Column: Help & Support -->
+          <div class="col-md-3 col-12 text-center text-md-end">
+            <h6 class="fw-bold mb-3">المساعدة والدعم</h6>
+            <ul class="footer-links">
+              <li>اتصل بنا</li>
+              <li>بلاغ عن فساد (نزاهة)</li>
+              <li>الأسئلة الشائعة</li>
+              <li>قنوات الخدمة</li>
+              <li>قنوات تفعيل الهوية الرقمية</li>
+              <li>التسجيل والاشتراك</li>
+            </ul>
+          </div>
+
+          <!-- Column: Important Links -->
+          <div class="col-md-3 col-12 text-center text-md-end">
+            <h6 class="fw-bold mb-3">روابط مهمة</h6>
+            <ul class="footer-links">
+              <li>بوابة وزارة الداخلية</li>
+              <li>المنصة الوطنية الموحدة</li>
+              <li>الاستراتيجية الوطنية للبيانات</li>
+              <li>منصة البيانات المفتوحة</li>
+              <li>بوابة المشاركة الإلكترونية</li>
+              <li>منصة الاستشارات القانونية</li>
+              <li>منصة الخدمات المالية (اعتماد)</li>
+              <li>تطبيقات الهوية الرقمية</li>
+            </ul>
+          </div>
+
+          <!-- Column: Assistive Tools -->
+          <div class="col-md-3 col-12 text-center text-md-end">
+            <h6 class="fw-bold mb-3">أدوات المساعدة</h6>
+
+            <div
+              class="footer-tools d-flex gap-3 mb-4 justify-content-center justify-content-md-start"
+            >
+              <div class="tool-icon"><i class="bi bi-plus-circle"></i></div>
+              <div class="tool-icon"><i class="bi bi-eye"></i></div>
+              <div class="tool-icon"><i class="bi bi-eye-fill"></i></div>
+            </div>
+
+            <button class="sign-lang-btn">
+              دعم لغة الإشارة <i class="bi bi-hand-index-thumb-fill"></i>
+            </button>
+
+            <h6 class="fw-bold mt-5 mb-3">تواصل معنا</h6>
+
+            <p class="contact-number">
+              920020405 <i class="bi bi-telephone"></i>
+            </p>
+
+            <div
+              class="social-icons d-flex gap-3 justify-content-center justify-content-md-start mt-3"
+            >
+              <div class="soc"><i class="bi bi-snapchat"></i></div>
+              <div class="soc"><i class="bi bi-facebook"></i></div>
+              <div class="soc">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+                  <path
+                    d="M18 3L6 21"
+                    stroke="#00724F"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                  />
+                  <path
+                    d="M6 3L18 21"
+                    stroke="#00724F"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                  />
+                </svg>
+              </div>
+              <div class="soc"><i class="bi bi-youtube"></i></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Government Authority Card -->
+        <div class="d-flex justify-content-center mt-5">
+          <img
+            src="https://raqmi.dga.gov.sa/PlatformsApi/api/Attachments/27640802-9445-4107-b190-b29c00e936c2"
+            class="dga-badge"
+          />
+        </div>
+      </div>
+    </footer>
+
+    <script>
+      // دالة إظهار/إخفاء كلمة المرور
+      function togglePassword() {
+        const passwordInput = document.getElementById("password");
+        const eyeIcon = document.getElementById("eyeIcon");
+
+        if (passwordInput.type === "password") {
+          passwordInput.type = "text";
+          eyeIcon.classList.remove("fa-eye");
+          eyeIcon.classList.add("fa-eye-slash");
+        } else {
+          passwordInput.type = "password";
+          eyeIcon.classList.remove("fa-eye-slash");
+          eyeIcon.classList.add("fa-eye");
+        }
+      }
+
+      // دالة التحقق من صحة المدخلات
+      function validateInput(input, type) {
+        const value = input.value.trim();
+        const group = document.getElementById(`${type}Group`);
+        const message = document.getElementById(`${type}Message`);
+
+        // إزالة أي كلاسات سابقة
+        group.classList.remove("error", "success");
+        message.classList.remove("error", "success");
+        message.textContent = "";
+
+        if (!value) {
+          group.classList.add("error");
+          message.textContent = "هذا الحقل مطلوب";
+          message.classList.add("error");
+          return false;
+        }
+
+        if (type === "username") {
+          if (value.length < 3) {
+            group.classList.add("error");
+            message.textContent = "يجب أن يكون اسم المستخدم 3 أحرف على الأقل";
+            message.classList.add("error");
+            return false;
+          }
+        }
+
+        if (type === "password") {
+          if (value.length < 6) {
+            group.classList.add("error");
+            message.textContent = "يجب أن تكون كلمة المرور 6 أحرف على الأقل";
+            message.classList.add("error");
+            return false;
+          }
+        }
+
+        group.classList.add("success");
+        message.textContent = "صحيح";
+        message.classList.add("success");
+        return true;
+      }
+
+      // دالة تسجيل الدخول (محاكاة)
+      function login() {
+        const username = document.getElementById("username").value.trim();
+        const password = document.getElementById("password").value.trim();
+        const loginBtn = document.getElementById("loginBtn");
+
+        // التحقق من المدخلات
+        const isUsernameValid = validateInput(
+          document.getElementById("username"),
+          "username"
+        );
+        const isPasswordValid = validateInput(
+          document.getElementById("password"),
+          "password"
+        );
+
+        if (!isUsernameValid || !isPasswordValid) {
+          return;
+        }
+
+        // عرض حالة التحميل
+        const originalText = loginBtn.innerHTML;
+        loginBtn.innerHTML =
+          '<i class="fas fa-spinner fa-spin btn-icon"></i> جاري تسجيل الدخول...';
+        loginBtn.classList.add("loading");
+        loginBtn.disabled = true;
+
+        // محاكاة اتصال بالخادم (تأخير 2 ثانية)
+        setTimeout(() => {
+          // إعادة الزر إلى حالته الأصلية
+          loginBtn.innerHTML = originalText;
+          loginBtn.classList.remove("loading");
+          loginBtn.disabled = false;
+          window.location.href = "home.html";
+
+          // عرض رسالة النجاح
+          alert(`تم تسجيل الدخول بنجاح!\nمرحباً ${username}`);
+
+          // هنا يمكن توجيه المستخدم إلى صفحة أخرى
+          // window.location.href = "dashboard.html";
+        }, 2000);
+      }
+
+      // إضافة الأحداث عند تحميل الصفحة
+      document.addEventListener("DOMContentLoaded", function () {
+        // ربط دالة togglePassword بزر العين
+        document
+          .getElementById("togglePasswordBtn")
+          .addEventListener("click", togglePassword);
+
+        // ربط دالة login بزر تسجيل الدخول
+        document.getElementById("loginBtn").addEventListener("click", login);
+
+        // السماح بالضغط على زر Enter لتسجيل الدخول
+        document
+          .getElementById("password")
+          .addEventListener("keypress", function (e) {
+            if (e.key === "Enter") {
+              login();
+            }
+          });
+
+        // التحقق من صحة المدخلات أثناء الكتابة
+        document
+          .getElementById("username")
+          .addEventListener("input", function () {
+            validateInput(this, "username");
+          });
+
+        document
+          .getElementById("password")
+          .addEventListener("input", function () {
+            validateInput(this, "password");
+          });
+
+        // التحقق من صحة المدخلات عند فقدان التركيز
+        document
+          .getElementById("username")
+          .addEventListener("blur", function () {
+            validateInput(this, "username");
+          });
+
+        document
+          .getElementById("password")
+          .addEventListener("blur", function () {
+            validateInput(this, "password");
+          });
+
+        // ربط زر "نسيت كلمة المرور" بإجراء محدد
+        document
+          .querySelector(".forgot-password-link")
+          .addEventListener("click", function (e) {
+            e.preventDefault();
+            alert("ستتم إعادة تعيين كلمة المرور عبر البريد الإلكتروني المسجل");
+          });
+
+        // ربط زر "مستخدم جديد" بإجراء محدد
+        document
+          .querySelector(".login-footer a")
+          .addEventListener("click", function (e) {
+            e.preventDefault();
+            alert("سيتم توجيهك إلى صفحة التسجيل");
+          });
+
+        // إضافة تأثيرات للهيدر (اختياري)
+        const headerIcons = document.querySelectorAll(".icon-btn");
+        headerIcons.forEach((icon) => {
+          icon.addEventListener("mouseenter", function () {
+            this.style.transform = "scale(1.1)";
+          });
+
+          icon.addEventListener("mouseleave", function () {
+            this.style.transform = "scale(1)";
+          });
+        });
+      });
+    </script>
+  </body>
+</html>
